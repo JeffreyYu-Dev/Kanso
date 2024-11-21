@@ -94,18 +94,18 @@ function VerticalAnimeCard({ data }) {
 
           {/* episodes */}
           <div className="bg-zinc-800/70 rounded h-full flex px-1 items-center">
-            <div className="text-muted-foreground hover:text-white duration-300 ease-in-out flex items-center gap-x-0.5">
-              <Mic size={12} />
+            <div className="text-muted-foreground  duration-300 ease-in-out flex items-center gap-x-0.5 hover:text-white">
               <Captions size={12} />
-              <h4 className="font-generalSans text-[0.65rem] leading-3 font-semibold text-muted-foreground hover:text-white duration-300 ease-in-out whitespace-nowrap">
+              <h4 className="font-generalSans text-[0.65rem] leading-3 font-semibold text-muted-foreground hover:text-white duration-300 ease-in-out whitespace-nowrap flex items-center gap-0.5">
+                <Mic size={12} />
                 11/24
               </h4>
             </div>
           </div>
           {/* RATING */}
-          <div className="bg-zinc-800/70 rounded h-full flex px-1 items-center gap-0.5">
-            <Star size={12} />
-            <h4 className="font-generalSans text-[0.65rem] leading-3 font-semibold text-muted-foreground hover:text-white duration-300 ease-in-out whitespace-nowrap">
+          <div className="bg-zinc-800/70 rounded h-full flex px-1 items-center ">
+            <h4 className="font-generalSans text-[0.65rem] leading-3 font-semibold flex items-center gap-0.5 text-muted-foreground hover:text-white duration-300 ease-in-out whitespace-nowrap">
+              <Star size={12} />
               {rating}%
             </h4>
           </div>
