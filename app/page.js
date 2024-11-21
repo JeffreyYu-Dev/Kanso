@@ -12,8 +12,7 @@ import getHeroCarouselData from "@/components/homePageComponents/heroCarousel/He
 
 // recent????????????????????/
 // HOW TO GET DATA???????//
-
-//
+import getLatestAired from "@/components/homePageComponents/display/getLatestAired";
 
 // upcoming?
 
@@ -21,14 +20,16 @@ import getHeroCarouselData from "@/components/homePageComponents/heroCarousel/He
 
 export default async function Home() {
   // get data for carousel
+
   const carouselData = await getHeroCarouselData();
+  const latestAiredData = await getLatestAired();
 
   return (
     <main className="flex justify-center">
       <div>
         <HeroCarousel carouselData={carouselData} />
         <ContinueWatching />
-        <Display carouselData={carouselData} />
+        <Display latestAiredData={latestAiredData} />
       </div>
     </main>
   );

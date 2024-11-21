@@ -17,7 +17,7 @@ const ShowDetails = ({ symbol, info, className, text, ...rest }) => {
       <div
         className={`${className} flex items-center justify-center bg-zinc-800 px-2 rounded h-5 text-muted-foreground`}
       >
-        <h4 className="font-generalSans font-semibold text-xs">
+        <h4 className="font-generalSans font-semibold text-xs text-nowrap">
           {info} {text}
         </h4>
       </div>
@@ -30,7 +30,7 @@ const ShowDetails = ({ symbol, info, className, text, ...rest }) => {
     >
       <div className="flex items-center justify-center -mt-px">
         {symbol}
-        <h4 className="font-generalSans font-semibold text-xs ml-1">
+        <h4 className="font-generalSans font-semibold text-xs ml-1 text-nowrap">
           {info} {text}
         </h4>
       </div>

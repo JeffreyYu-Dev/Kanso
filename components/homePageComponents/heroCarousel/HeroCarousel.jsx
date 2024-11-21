@@ -44,6 +44,7 @@ function HeroCarousel({ carouselData }) {
                   alt={data?.title?.romaji || ""}
                   width={1440}
                   height={400}
+                  priority
                   className="object-cover h-full w-full -z-10 rounded-lg"
                 />
                 <div className="absolute top-0 w-full h-full">

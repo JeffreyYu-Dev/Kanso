@@ -20,10 +20,7 @@ const generalSans = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      {/* FIXME: must fix scrollbar issue */}
-      <body
-        className={`antialiased dark ${generalSans.variable} scrollbar scrollbar-thumb-white scrollbar-thumb-rounded-full`}
-      >
+      <body className={`antialiased dark ${generalSans.variable} `}>
         <NavBar />
         <div className="flex justify-center">
           <div className="max-w-[1600px] w-11/12">{children}</div>

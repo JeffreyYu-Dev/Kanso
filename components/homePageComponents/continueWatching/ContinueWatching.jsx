@@ -28,10 +28,15 @@ function ContinueWatching() {
   const episodeNumber = "";
 
   return (
-    <div className="h-48 mt-4 flex flex-col ">
+    <div className="h-52 mt-4 flex flex-col ">
       {/* TODO: work on continue watcching page */}
       {/* Continue watching title */}
-      <SectionTitle title="Continue Watching" link={`/`} hoverColour={"blue"} />
+      <SectionTitle
+        title="Continue Watching"
+        link={`/`}
+        hoverColour={"blue"}
+        textSize={"text-2xl"}
+      />
 
       {/* watch some anime stupid :D */}
       {!displayList && (

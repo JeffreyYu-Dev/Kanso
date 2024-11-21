@@ -1,94 +1,117 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Play, SquarePlus } from "lucide-react";
+import { Play, Plus, Captions, Mic, Star } from "lucide-react";
 
-function VerticalAnimeCard({
-  title,
-  seasonYear,
-  rating,
-  format,
-  coverImage,
-  status,
-}) {
+function VerticalAnimeCard({ data }) {
+  let title =
+    data?.title?.english || data?.title?.romaji || data?.title?.native;
+  let seasonYear = data?.seasonYear;
+  let rating = data?.averageScore;
+  let format = data?.format.replace("_", " ");
+  let coverImage = data?.coverImage?.large;
+  let status = data?.status || "unknown";
+
+  if (format == "NOVEL" || format == "MANGA" || format == "ONE_SHOT") {
+    return null;
+  }
+
+  if (title == null) {
+    return null;
+  }
+
+  if (rating == null) {
+    return null;
+  }
+
   const showStatusColourMap = {
-    upcoming: "bg-orange-500",
-    airing: "bg-sky-500",
-    completed: "bg-lime-500",
+    NOT_YET_RELEASED: "bg-orange-500",
+    RELEASING: "bg-sky-500",
+    FINISHED: "bg-lime-500",
+    HIATUS: "bg-yellow-500",
+    CANCELLED: "bg-red-500",
+    unknown: "bg-fuchsia-500",
   };
 
   return (
-    <div className="w-full">
-      <Link href="/" className="block">
-        <div className="p-1 rounded-md ring-black/10 shadow-lg bg-zinc-900/20">
-          {/* Image Container */}
-          <div className="relative aspect-[2/3] group">
-            <div className="absolute inset-0 transition-transform duration-300 ease-in-out group-hover:-translate-y-1">
-              <Image
-                src={coverImage}
-                alt={title}
-                fill
-                className="rounded object-cover"
-                priority
-              />
-
-              {/* Hover Overlay */}
-              <div className="absolute inset-0 bg-zinc-950/70 rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute top-2 right-2">
-                  <SquarePlus className="hover:opacity-50 transition-colors duration-300 hover:text-green-300" />
-                </div>
-
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                  <Play
-                    size={32}
-                    fill="white"
-                    className="hover:opacity-80 transition-transform duration-300 hover:scale-110"
-                  />
-                </div>
-
-                <div className="absolute bottom-2 left-2 right-2">
-                  <div className="text-xs font-semibold bg-zinc-900 ring-1 ring-black/5 rounded px-2 py-2 text-center">
-                    {format}
-                  </div>
-                </div>
+    <Link href="/">
+      <div className="w-full overflow-hidden transform-gpu p-2">
+        {/* Image */}
+        <div className="w-full relative aspect-[2/3] rounded will-change-transform overflow-hidden hover:-translate-y-1 duration-300 ease-in-out ">
+          <div className="w-full h-full">
+            <Image
+              src={coverImage}
+              alt={title}
+              fill
+              className="object-cover rounded-md w-full"
+              priority
+            />
+            {/* OVERLAY */}
+            <div className="opacity-0 bg-zinc-900/80 w-full h-full rounded hover:opacity-100 duration-300 ease-in-out inset-0 absolute">
+              {/* PLAY BUTTON */}
+              <div className="flex justify-center items-center h-full">
+                <Play fill="#fff" size={32} />
               </div>
-            </div>
-          </div>
-
-          {/* Content Container */}
-          <div className="space-y-1 mt-1">
-            {/* Title */}
-            <div className="h-7 flex items-center gap-1 px-2 py-1 hover:bg-zinc-900/80 rounded transition-colors duration-300">
-              <span
-                className={`${showStatusColourMap[status]} size-1.5 rounded-full flex-shrink-0`}
-              />
-              <h3 className="font-generalSans font-semibold text-xs truncate">
-                {title}
-              </h3>
-            </div>
-
-            {/* Details */}
-            <div className="h-5 grid grid-cols-3 gap-0.5 px-0.5">
-              <div className="rounded bg-zinc-900 flex items-center justify-center">
-                <h4 className="text-muted-foreground font-generalSans font-semibold text-[10px] px-1">
-                  {seasonYear}
-                </h4>
-              </div>
-              <div className="rounded bg-zinc-900 flex items-center justify-center">
-                <h4 className="text-muted-foreground font-generalSans font-semibold text-[10px] px-1">
-                  EPISODE
-                </h4>
-              </div>
-              <div className="rounded bg-zinc-900 flex items-center justify-center">
-                <h4 className="text-muted-foreground font-generalSans font-semibold text-[10px] px-1">
-                  {rating}%
-                </h4>
+              {/* add button */}
+              <div className="absolute inset-0 justify-end flex mt-1 mr-1">
+                <Plus
+                  size={20}
+                  className="bg-zinc-900/20 text-white/50 hover:ring-white hover:text-white duration-300 p-0.5 ring-1 ring-zinc-900/20 shadow rounded"
+                ></Plus>
               </div>
             </div>
           </div>
         </div>
-      </Link>
-    </div>
+        {/* title */}
+        <div className="flex items-center gap-1 mt-1 hover:bg-zinc-950/80 py-1 px-1 rounded duration-300 ease-in-out">
+          <span
+            className={`inline-block rounded-full ${showStatusColourMap[status]} size-2 flex-shrink-0`}
+          ></span>
+          <h3 className="font-generalSans text-xs font-semibold text-nowrap text-ellipsis overflow-hidden whitespace-nowrap">
+            {title}
+          </h3>
+        </div>
+
+        {/* details */}
+        <div className="flex items-center gap-x-1 mt-1 h-5 px-1 overflow-hidden">
+          {/* year */}
+          {seasonYear && (
+            <div className="bg-zinc-800/70 rounded px-1 h-full flex items-center">
+              <h4 className="font-generalSans text-[0.65rem] leading-3 font-semibold text-muted-foreground hover:text-white duration-300 ease-in-out whitespace-nowrap">
+                {seasonYear}
+              </h4>
+            </div>
+          )}
+
+          {/* format */}
+          {format && (
+            <div className="bg-zinc-800/70 rounded h-full flex px-1 items-center">
+              <h4 className="font-generalSans text-[0.65rem] leading-3 font-semibold text-muted-foreground hover:text-white duration-300 ease-in-out whitespace-nowrap">
+                {format}
+              </h4>
+            </div>
+          )}
+
+          {/* episodes */}
+          <div className="bg-zinc-800/70 rounded h-full flex px-1 items-center">
+            <div className="text-muted-foreground hover:text-white duration-300 ease-in-out flex items-center gap-x-0.5">
+              <Mic size={12} />
+              <Captions size={12} />
+              <h4 className="font-generalSans text-[0.65rem] leading-3 font-semibold text-muted-foreground hover:text-white duration-300 ease-in-out whitespace-nowrap">
+                11/24
+              </h4>
+            </div>
+          </div>
+          {/* RATING */}
+          <div className="bg-zinc-800/70 rounded h-full flex px-1 items-center gap-0.5">
+            <Star size={12} />
+            <h4 className="font-generalSans text-[0.65rem] leading-3 font-semibold text-muted-foreground hover:text-white duration-300 ease-in-out whitespace-nowrap">
+              {rating}%
+            </h4>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 }
 
