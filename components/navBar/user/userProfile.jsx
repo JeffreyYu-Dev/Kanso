@@ -13,7 +13,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Button } from "@/components/ui/button";
 
-import { User, UserRoundPen } from "lucide-react";
+import { User, UserRoundPen, Heart } from "lucide-react";
 
 function truncatedUsername(username) {
   const length = 15;
@@ -37,7 +37,7 @@ function UserProfile({ className }) {
   const test = {
     name: "Jeffrey Yu",
     profilePicture: "https://github.com/shadcn.png",
-    //  fix this up to make it like discord sorta
+    // FIXME: this up to make it like discord sorta
     status: "watching the 7th prince",
   };
 
@@ -48,7 +48,7 @@ function UserProfile({ className }) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div
-          className={`${className} bg-zinc-900 w-44 h-12 rounded-md flex items-center justify-between border max-w-52 hover:bg-zinc-800 ease-in-out duration-200 `}
+          className={`${className} bg-zinc-900 w-44 h-12 rounded-md flex items-center justify-between border max-w-52 hover:bg-zinc-800 ease-in-out duration-200`}
         >
           {/* Is logged in? display avatar */}
           <div className="mx-2 flex justify-between w-full items-center flex-row-reverse">
@@ -77,15 +77,18 @@ function UserProfile({ className }) {
           </div>
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-44 bg-zinc-950">
+      <DropdownMenuContent className="w-44 bg-zinc-900 mt-1">
+        {/* PROFILE */}
         <DropdownMenuLabel className="" asChild>
           <div className="flex items-center gap-2">
-            <UserRoundPen size={16} />
-            <h3 className="text-sm">Account</h3>
+            <User size={16} />
+            <h4 className="text-sm font-generalSans font-semibold">Account</h4>
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Profile</DropdownMenuItem>
+        <DropdownMenuItem>
+          <h4 className="text-sm font-generalSans font-medium ml-1">Profile</h4>
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

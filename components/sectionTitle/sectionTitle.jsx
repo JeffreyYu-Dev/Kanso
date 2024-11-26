@@ -4,9 +4,6 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 
 function SectionTitle({ title, className, link, hoverColour, textSize }) {
-  if (link == null || link.trim() == "")
-    throw new Error("Must enter link for section title component");
-
   if (title == "" || title == null) {
     throw new Error("Must enter title for section title component");
   }

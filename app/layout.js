@@ -1,7 +1,7 @@
 import "./globals.css";
 import localFont from "next/font/local";
 
-import NavBar from "@/components/navBar/NavBar";
+import NavBar from "@/components/navBar/navBar";
 
 export const metadata = {
   title: "Create Next App",
@@ -14,16 +14,41 @@ const generalSans = localFont({
   variable: "--generalSans",
 });
 
+import { CommandMenu } from "@/components/command/command";
+import Footer from "@/components/footer/footer";
+
+// FIXME: this is going to be a nightmare mapping animes
 // todo:
 // - add Watch button to carousel
+// - pagination to the front
+// - popular
+// - notification system for anime
+// - friend system
+// - watch party system
+// - to get filler must use gogoanime ?
+// - how do get url based on ani id?
+// - be able to change providers
+// - prefetch anime when they hover over the card
+// - add suspense when fetching data
+// - ADD SKELETONS TO SITE
+// - the reason why it takes a while to load the watch page only happens on the first enter because it has to fetch the watch page js html and css after it should be fine
+// - the add button one each show on the verticalCard is not working
+// - reduce amount of data fetch during api calls ( like when fetching top only fetch 5 at a time instead of 20 and so on)
+// - TODO: MUST WRITE MY OWN PROXY EVENTUALLY
+// - MUST GET EPISODE FROM LOCALSTORAGE OR DATABASE IF THEY"VE WATCHED THE ANIME B4
+// - implement redis to cache links
+
+// WE HAVE SO MUCH TO DO :(
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`antialiased dark ${generalSans.variable} `}>
         <NavBar />
-        <div className="flex justify-center">
+        <CommandMenu />
+        <div className="flex flex-col items-center">
           <div className="max-w-[1600px] w-11/12">{children}</div>
+          <Footer className="max-w-[1600px]" />
         </div>
       </body>
     </html>

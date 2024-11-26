@@ -1,19 +1,22 @@
 "use client";
 
-// nextjs / react imports
 import React, { useCallback } from "react";
 import Image from "next/image";
-
-// carousel imports
 import { Embla, EmblaContainer, EmblaSlide } from "@/components/carousel/embla";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-
-// component imports
+import { ChevronRight, ChevronLeft } from "lucide-react";
 import Info from "./Info";
+import { Button } from "@/components/ui/button";
 
 function HeroCarousel({ carouselData }) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, []);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    {
+      loop: true,
+      slidesToScroll: 1,
+    },
+    []
+  );
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) emblaApi.scrollPrev();
@@ -24,26 +27,28 @@ function HeroCarousel({ carouselData }) {
   }, [emblaApi]);
 
   return (
-    <section className="mt-4">
-      <Embla ref={emblaRef} className="rounded-lg h-[350px] select-none ">
+    <section className="relative mt-4">
+      <div className="absolute z-10 right-2 top-2 p-1 rounded-md inline-flex gap-1 bg-zinc-900 ring-1 shadow-md ring-black/5">
+        <Button variant="outline" size="icon" onClick={scrollPrev}>
+          <ChevronLeft size={12} />
+        </Button>
+        <Button variant="outline" size="icon" onClick={scrollNext}>
+          <ChevronRight size={12} />
+        </Button>
+      </div>
+      <Embla ref={emblaRef} className="rounded-lg h-[350px] select-none">
         <EmblaContainer className="w-full h-full">
-          {/* only render anime with banner image links */}
-          {carouselData?.map((data, index) => {
-            if (data?.bannerImage == null) {
-              return null;
-            }
-            // render anime
-            return (
-              // MUST PASS BASIS KIND into embla slide
+          {carouselData
+            ?.filter((data) => data?.bannerImage)
+            ?.map((data, index) => (
               <EmblaSlide
-                className="w-full h-full mr-4 relative basis-full"
                 key={index}
+                className="w-full h-full mr-4 relative basis-full flex-grow-0 flex-shrink-0"
               >
                 <Image
                   src={data?.bannerImage || "/"}
                   alt={data?.title?.romaji || ""}
-                  width={1440}
-                  height={400}
+                  fill
                   priority
                   className="object-cover h-full w-full -z-10 rounded-lg"
                 />
@@ -55,8 +60,7 @@ function HeroCarousel({ carouselData }) {
                   />
                 </div>
               </EmblaSlide>
-            );
-          })}
+            ))}
         </EmblaContainer>
       </Embla>
     </section>

@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 //components
-import SectionTitle from "@/components/sectionTitle/SectionTitle";
+import SectionTitle from "@/components/sectionTitle/sectionTitle";
 
 // TODO: do this another time
 function ContinueWatching() {
@@ -33,9 +33,10 @@ function ContinueWatching() {
       {/* Continue watching title */}
       <SectionTitle
         title="Continue Watching"
-        link={`/`}
+        link={`/watch-history`}
         hoverColour={"blue"}
         textSize={"text-2xl"}
+        className="mb-2"
       />
 
       {/* watch some anime stupid :D */}
@@ -44,7 +45,7 @@ function ContinueWatching() {
           <h1 className="font-generalSans text-xl font-semibold">
             Nothing to see...{" "}
             <Link href="/explore">
-              <span className="underline animate-shimmer hover:text-white/65 duration-500 ease-in-out">
+              <span className="underline animate-shimmer hover:text-white/60 duration-500 ease-in-out">
                 Explore
               </span>
             </Link>

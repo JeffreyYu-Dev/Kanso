@@ -1,11 +1,13 @@
 import React from "react";
+import Link from "next/link";
 
 // icons
-import { Star, Captions, Clock, ChevronLeft, ChevronRight } from "lucide-react";
+import { Star, Captions, Clock, Play } from "lucide-react";
 
 // components
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
+
+import urlBuild from "@/components/urlBuilder/urlBuild";
 
 const ShowDetails = ({ symbol, info, className, text, ...rest }) => {
   if (info == null) {
@@ -38,26 +40,37 @@ const ShowDetails = ({ symbol, info, className, text, ...rest }) => {
   );
 };
 
-function numberOfEpisodes([episodeCount, airingEpisodeCount]) {
+function numberOfEpisodes(episodeCount, airingEpisodeCount) {
   if (episodeCount == null && airingEpisodeCount == null) return null;
   if (episodeCount == null) return airingEpisodeCount - 1;
   return episodeCount;
 }
 
+function removeStuff(string) {
+  const remove = ["<i>", "<br>", "</br>", "</i>"];
+
+  return remove.reduce((str, tag) => str.replaceAll(tag, ""), string);
+}
+
 // FIXME: what happens when the anime finishes? youll need to check if the anime is finished airing and just apply the # of episodes?
 // idk if i hve to actually
-function Info({ className, animeInfo, scrollNext, scrollPrev, ...rest }) {
+function Info({ className, animeInfo, scrollNext, scrollPrev }) {
   const title = animeInfo.title?.english;
   const avgScore = animeInfo.averageScore;
   const format = animeInfo.format;
   const seasonYear = animeInfo.seasonYear;
   const avgDuration = animeInfo.duration;
-  const description = animeInfo.description;
+  let description = removeStuff(animeInfo.description);
 
-  const episodes = numberOfEpisodes([
+  const id = animeInfo.id;
+
+  const episodes = numberOfEpisodes(
     animeInfo.episodes,
-    animeInfo?.nextAiringEpisode?.episode,
-  ]);
+    animeInfo?.nextAiringEpisode?.episode
+  );
+
+  let showUrl = urlBuild("/watch", { id: id, episode: 1 });
+  let detailsPage = urlBuild("/details");
 
   return (
     <div
@@ -67,16 +80,6 @@ function Info({ className, animeInfo, scrollNext, scrollPrev, ...rest }) {
           "radial-gradient(at center 100px ,transparent 0%,rgba(0,0,0,1) 100%",
       }}
     >
-      {/* buttons */}
-      <div className="absolute right-2 top-2 p-1 rounded-md inline-flex gap-1 bg-zinc-900 ring-1 shadow-md ring-black/5">
-        <Button variant="outline" size="icon" onClick={scrollPrev}>
-          <ChevronLeft size={12} />
-        </Button>
-        <Button variant="outline" size="icon" onClick={scrollNext}>
-          <ChevronRight size={12} />
-        </Button>
-      </div>
-
       {/* data */}
       <div className="w-full absolute bottom-0">
         <div className="w-1/2 ml-4">
@@ -117,6 +120,16 @@ function Info({ className, animeInfo, scrollNext, scrollPrev, ...rest }) {
           <p className="text-xs mb-2 font-generalSans font-medium text-muted-foreground line-clamp-3 text-pretty">
             {description}
           </p>
+          <div className="flex mb-2">
+            <Link href={showUrl}>
+              <div className="py-1.5 px-4 bg-white rounded inline-block hover:scale-110 duration-300 ease-in-out will-change-transform shadow">
+                <h2 className="font-semibold text-zinc-800 font-generalSans text-sm flex items-center gap-1 ">
+                  <Play size={24} fill="text-zinc-800" />
+                  Watch Now
+                </h2>
+              </div>
+            </Link>
+          </div>
         </div>
       </div>
     </div>
